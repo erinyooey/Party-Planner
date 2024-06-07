@@ -1,12 +1,10 @@
-//Create a list of approximately 6 parties happening in June with buttons that give the user the option to reserve party or decline.
-// Each party in  the list will have a delete button
-// On click delete that party is deleted from the list
-// Create a form that allows user to add their party to the list onclick of submit
-const getPartyData = async () => {
+
+  const getPartyData = async () => {
   try {
     const data = await fetch(
       "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events"
     );
+
     const response = await data.json();
     const displayed = response.data;
     console.log(displayed);
@@ -15,11 +13,11 @@ const getPartyData = async () => {
     console.log(error.message);
   }
 };
-getPartyData().then((displayed) => {
-  displayParties(displayed);
+    getPartyData().then((displayed) => {
+    displayParties(displayed);
 });
 
-function displayParties(displayed) {
+function displayParties(displayed) => {
   console.log("I am in display!");
 }
 
@@ -35,8 +33,7 @@ function deleteParty(itemId) {
     `https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events/${itemId}`,
     {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+      headers: {"Content-Type": "application/json",
       },
     }
   )
@@ -47,28 +44,59 @@ function deleteParty(itemId) {
       console.log("Event Deleted");
       getPartyData().then((displayed) => {
         displayParties(displayed);
-      }); // items = items.filter(item => item.id !== itemId);
-      // document.querySelector(`li[data-id="${itemId}"]`).remove();
-      //     console.log('Event Eliminated');
-    })
+
+   }); 
+   
+   })
     .catch((error) => {
       console.error("There was a problem processing fetch request:", error);
     });
-}
 
-// const addParty = adocument.getElementById('party-form');
-// addParty.addEventListener('submit', (e)=>{
-//   e.preventDefault()
-// })/
+   const addParty = (newParty) => {
+   const apiUrl =  "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";
+   const apiToken = "Your_API_Token"; // Replace with your actual API token
+   }
 
-// use if/else statement to give user's the option to delete or reserve a party
-//function addParty () {};
 
-//Use Post to add new party to API
+const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiToken}`
+    },
+    body: JSON.stringify(newParty)
+  };
 
-const init = () => {
-  displayParties();
-  console.log("Hello ");
+  fetch(apiUrl, requestOptions)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Failed to add data to the API.');
+    })
+    .then(data => {
+      console.log("Data successfully added to the API.", data);
+      getPartyData().then((displayed) => {
+        displayParties(displayed);
+      });
+    })
+    .catch(error => {
+      console.error("There was a problem adding the data to the API:", error);
+    });
 };
 
-init();
+// Example usage
+const newParty = {
+  // Add the necessary fields for your new party
+  name: "Party",
+  date: "2024-06-30",
+  location: //"Example Location"
+};
+
+addParty(newParty)
+
+const init = () => {
+    displayParties();
+    console.log("Hello ");
+  };
+  init();

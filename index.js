@@ -1,16 +1,19 @@
 
-  const getPartyData = async () => {
+  async function getPartyData() {
   try {
-    const data = await fetch(
+    const response = await fetch(
       "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events"
     );
+    if(!response.ok){
+      throw new Error("Cold not access data.")
+    }
 
     const response = await data.json();
     const displayed = response.data;
     console.log(displayed);
     return displayed;
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
   }
 };
     getPartyData().then((displayed) => {
@@ -36,21 +39,12 @@ function deleteParty(itemId) {
       headers: {"Content-Type": "application/json",
       },
     }
-  )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("Event Deleted");
-      getPartyData().then((displayed) => {
-        displayParties(displayed);
-
-   }); 
-   
-   })
-    .catch((error) => {
-      console.error("There was a problem processing fetch request:", error);
-    });
+  ) if(!resonse.ok){
+    throw new Error("Error");
+  }
+  await response.json();
+  console.log(displayed);
+  
 
    const addParty = (newParty) => {
    const apiUrl =  "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";

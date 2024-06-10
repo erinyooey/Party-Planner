@@ -48,33 +48,42 @@ async function deleteParty(itemId) {
   }
 }
 
-const addParty = async (newParty) => {
-  const apiUrl =
-    "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";
-  try {
-    const response = await fetch(apiUrl, {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newParty),
-    });
+// const addParty = async (newParty) => {
+//   const apiUrl =
+//     "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";
+//   try {
+//     const response = await fetch(apiUrl, {
+//       method: "Post",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(newParty),
+//     });
 
-    if (!response.ok) {
-      throw new Error("Failed to add party");
-    }
-    const addedParty = await response.json();
-    console.log(addedParty);
-  } catch (error) {
-    console.error(error);
-  }
-};
+//     if (!response.ok) {
+//       throw new Error("Failed to add party");
+//     }
+//     const addedParty = await response.json();
+//     console.log(addedParty);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 const formEl = document.querySelector("form");
 formEl.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const formData = new FormData(formEl);
-  const data = object.forEntries(formData);
+  const formData = new FormData(event.target);
+const description = formData.get("description");
+const date = formData.get("date");
+const eventName = formData.get("name");
+const obj ={
+  name,
+  date,
+  description,
+};
+
+console.log(obj); 
   try {
     const response = await fetch(
       "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events",

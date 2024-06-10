@@ -8,8 +8,7 @@
       throw new Error("Cold not access data.")
     }
 
-    const response = await data.json();
-    const displayed = response.data;
+    const displayed = response.json();
     console.log(displayed);
     return displayed;
   } catch (error) {
@@ -20,7 +19,7 @@
     displayParties(displayed);
 });
 
-function displayParties(displayed) => {
+function displayParties(displayed) {
   console.log("I am in display!");
 }
 
@@ -31,66 +30,77 @@ const Party = () => {
   body.style.width = "100%";
 };
 
-function deleteParty(itemId) {
-  fetch(
+async function deleteParty(itemId) {
+  try{
+    const response = await fetch(
+
     `https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events/${itemId}`,
     {
       method: "DELETE",
       headers: {"Content-Type": "application/json",
       },
     }
-  ) if(!resonse.ok){
+  );
+
+  if (!response.ok)
     throw new Error("Error");
-  }
-  await response.json();
-  console.log(displayed);
   
+  
+  const displayed = await response.json();
+  console.log(displayed);
+} catch (error) {
+  console.error(error);
+}
+};
 
-   const addParty = (newParty) => {
-   const apiUrl =  "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";
-   const apiToken = "Your_API_Token"; // Replace with your actual API token
-   }
+const addParty = async (newPart) => {
+  const apiUrl =  "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events";
+try{ const response = await fetch(apiUrl, {
+  method: 'Post',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(newParty),
+});
 
+if(!response.ok){
+  throw new Error("Failed to add party");
+}
+ const addedParty = await response.json();
+ console.log(addedParty);
+} catch(error){
+  console.error(error);
+}
+};
 
-const requestOptions = {
-    method: 'POST',
+const formEl = document.querySelector('form');
+formEl.addEventListener('submit', async(event)=>{
+event.preventDefault();
+const formData = new FormData(formEl);
+const data = object.forEntries(formData);
+try{
+  const response = await fetch('https://fsa-crud-2aa9294fe819.herokuapp.com/api/2405-FTB-ET-WEB-FT/events', {
+    Method: 'Post',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiToken}`
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(newParty)
-  };
-
-  fetch(apiUrl, requestOptions)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Failed to add data to the API.');
-    })
-    .then(data => {
-      console.log("Data successfully added to the API.", data);
-      getPartyData().then((displayed) => {
-        displayParties(displayed);
-      });
-    })
-    .catch(error => {
-      console.error("There was a problem adding the data to the API:", error);
-    });
-};
-
-// Example usage
-const newParty = {
-  // Add the necessary fields for your new party
-  name: "Party",
-  date: "2024-06-30",
-  location: //"Example Location"
-};
-
-addParty(newParty)
+    body: JSON.stringify(data)
+  });
+if(!response.ok){
+  throw new Error('Failed to submit form');
+}
+const result = await response.json();
+console.log(results);
+} catch(error){
+  console.error(error);
+}
+});
 
 const init = () => {
-    displayParties();
-    console.log("Hello ");
-  };
-  init();
+getPartyData(). then((displayed) =>{
+  displayParties(displayed);
+}
+)};
+
+
+init();

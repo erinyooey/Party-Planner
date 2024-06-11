@@ -6,39 +6,14 @@
     <title>Document</title>
   </head>
   <body>
-    <ul id="party-list">
-      <li data-id="1">
-        Party 1<br><button onclick="deleteParty(1)">Delete</button>
-      </li>
-      <li data-id="2">
-        Party 2<br><button onclick="deleteParty(2)">Delete</button>
-      </li>
-      <li data-id="3">
-        Party 3<br><button onclick="deleteParty(3)">Delete</button>
-      </li>
-      <li data-id="4">
-        Party 4<br><button onclick="deleteParty(4)">Delete</button>
-      </li>
+    <ul id="party-list"></ul>
 
-      <li data-id="5">
-        Party 5<br><button onclick="deleteParty(5)">Delete</button>
-      </li>
-      <li data-id="6">
-        Party 6<br><button onclick="deleteParty(6)">Delete</button>
-      </li>
-      <li data-id="7">
-        Party 7<br><button onclick="deleteParty(7)">Delete</button>
-      </li>
-      <li data-id="8">
-        Party 8<br><button onclick="deleteParty(8)">Delete</button>
-      </li>
-    </ul>
-
-    <button>Link to Create Event</button>
     <form id="party-form">
       <input type="text" id="name" placeholder="Event Name" required />
       <input type="date" id="date" required />
-      <textarea id="description" placeholder="Description" name="description" required></textarea>
+      <input type="text" id="location" placeholder="Location" required />
+      <input type="time" id="time" required />
+      <textarea id="description" placeholder="Description" required></textarea>
       <button type="submit">Add Party</button>
     </form>
   </body>
